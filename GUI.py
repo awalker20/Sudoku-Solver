@@ -1,9 +1,10 @@
 import pygame
 import time
-pygame.init()
+pygame.font.init()
 
 
 class Grid:
+    #board to display
     board = [
         [7, 8, 0, 4, 0, 0, 1, 2, 0],
         [6, 0, 0, 0, 7, 5, 0, 0, 9],
@@ -79,7 +80,10 @@ class Grid:
             self.cubes[row][col].set_temp(0)
 
     def click(self, pos):
-    
+        """
+        :param: pos
+        :return: (row, col)
+        """
         if pos[0] < self.width and pos[1] < self.height:
             gap = self.width / 9
             x = pos[0] // gap
@@ -88,6 +92,7 @@ class Grid:
         else:
             return None
 
+    # check if board is filled
     def is_finished(self):
         for i in range(self.rows):
             for j in range(self.cols):
@@ -95,6 +100,7 @@ class Grid:
                     return False
         return True
 
+    # solve board
     def solve(self):
         find = find_empty(self.model)
         if not find:
@@ -245,7 +251,7 @@ def format_time(secs):
     minute = secs//60
     hour = minute//60
 
-    mat = " " + str(minute) + ":" + str(sec)
+    mat = " " + str(minute) + ":" + str(sec - 3)
     return mat
 
 
@@ -283,7 +289,7 @@ def main():
                     key = 8
                 if event.key == pygame.K_9:
                     key = 9
-                if event.key == pygame.K_DELETE:
+                if event.key == pygame.K_ESCAPE:
                     board.clear()
                     key = None
 
